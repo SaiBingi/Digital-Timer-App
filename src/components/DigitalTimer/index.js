@@ -180,3 +180,220 @@ class DigitalTimer extends Component {
 }
 
 export default DigitalTimer
+
+
+
+
+
+
+
+
+
+// import {Component} from 'react'
+
+// import './index.css'
+
+// let isZeroTimer = false
+
+// class DigitalTimer extends Component {
+//   state = {
+//     minutes: 25,
+//     time: new Date(1, 1, 1, 1, 25, 0),
+//     isTimerStarted: false,
+//     isResetClicked: true,
+//   }
+
+//   onDecreaseMinutes = () => {
+//     const {time} = this.state
+
+//     this.setState({
+//       time: new Date(1, 1, 1, 1, time.getMinutes() - 1),
+//       minutes: time.getMinutes() - 1,
+//     })
+//   }
+
+//   constantMinutes = () => {
+//     const {minutes} = this.state
+
+//     this.setState({minutes})
+//   }
+
+//   onIncreaseMinutes = () => {
+//     const {time} = this.state
+
+//     this.setState({
+//       time: new Date(1, 1, 1, 1, time.getMinutes() + 1),
+//       minutes: time.getMinutes() + 1,
+//     })
+//   }
+
+//   zeroTimer = () => {
+//     clearInterval(this.timerId)
+
+//     this.setState(previousState => ({
+//       isTimerStarted: !previousState.isTimerStarted,
+//       minutes: 1,
+//     }))
+//   }
+
+//   onResetTimer = () => {
+//     this.setState({
+//       time: new Date(1, 1, 1, 1, 25),
+//       minutes: 25,
+//       isResetClicked: true,
+//     })
+//     clearInterval(this.timerId)
+//   }
+
+//   onStartOrPause = () => {
+//     const {isTimerStarted} = this.state
+
+//     if (!isTimerStarted) {
+//       this.timerId = setInterval(() => {
+//         const {time} = this.state
+
+//         this.setState({
+//           time: new Date(1, 1, 1, 1, time.getMinutes(), time.getSeconds() - 1),
+//         })
+//       }, 1000)
+
+//       this.setState({isTimerStarted: true, isResetClicked: false})
+//     } else {
+//       clearInterval(this.timerId)
+//       this.setState({isTimerStarted: false, isResetClicked: false})
+//     }
+//   }
+
+//   render() {
+//     const {minutes, time, isTimerStarted, isResetClicked} = this.state
+
+//     const getMinutes = time.getMinutes()
+//     const getSeconds = time.getSeconds()
+
+//     const getTime = `${
+//       String(getMinutes).length === 1 ? `0${getMinutes}` : getMinutes
+//     }:${String(getSeconds).length === 1 ? `0${getSeconds}` : getSeconds}`
+
+//     if (!isZeroTimer && getTime === '00:00') {
+//       this.zeroTimer()
+//       isZeroTimer = true
+//     }
+
+//     const changeTimerStatus = isTimerStarted
+//       ? {
+//           iconStatus: 'Pause',
+//           changeIcon:
+//             'https://assets.ccbp.in/frontend/react-js/pause-icon-img.png',
+//           changeIconAltText: 'pause icon',
+//           timerStatus: 'Running',
+//           onIncreaseMin: this.constantMinutes,
+//           onDecreaseMin: this.constantMinutes,
+//         }
+//       : {
+//           iconStatus: 'Start',
+//           changeIcon:
+//             'https://assets.ccbp.in/frontend/react-js/play-icon-img.png',
+//           changeIconAltText: 'play icon',
+//           timerStatus: 'Paused',
+//           onIncreaseMin: this.constantMinutes,
+//           onDecreaseMin: this.constantMinutes,
+//         }
+
+//     const resetTimerStatus = isResetClicked
+//       ? {
+//           iconStatus: 'Start',
+//           changeIcon:
+//             'https://assets.ccbp.in/frontend/react-js/play-icon-img.png',
+//           changeIconAltText: 'play icon',
+//           timerStatus: 'Paused',
+//           onIncreaseMin: this.onDecreaseMinutes,
+//           onDecreaseMin: this.onIncreaseMinutes,
+//         }
+//       : ''
+
+//     return (
+//       <div className="bg-container">
+//         <h1 className="heading">Digital Timer</h1>
+//         <div className="container">
+//           <div className="timer-container">
+//             <div className="time-display">
+//               <h1 className="timer">{getTime}</h1>
+//               <p className="timer-status">
+//                 {resetTimerStatus.timerStatus || changeTimerStatus.timerStatus}
+//               </p>
+//             </div>
+//           </div>
+//           <div className="set-timer-limit">
+//             <div className="icons-container">
+//               <div>
+//                 <button
+//                   type="button"
+//                   className="icon-button icon-text"
+//                   onClick={this.onStartOrPause}
+//                 >
+//                   <img
+//                     src={
+//                       resetTimerStatus.changeIcon ||
+//                       changeTimerStatus.changeIcon
+//                     }
+//                     alt={
+//                       resetTimerStatus.changeIconAltText ||
+//                       changeTimerStatus.changeIconAltText
+//                     }
+//                     className="icon"
+//                   />
+//                   <p className="icon-status">
+//                     {resetTimerStatus.iconStatus ||
+//                       changeTimerStatus.iconStatus}
+//                   </p>
+//                 </button>
+//               </div>
+//               <div>
+//                 <button
+//                   type="button"
+//                   className="icon-button icon-text"
+//                   onClick={this.onResetTimer}
+//                 >
+//                   <img
+//                     src="https://assets.ccbp.in/frontend/react-js/reset-icon-img.png"
+//                     alt="reset icon"
+//                     className="icon"
+//                   />
+//                   <p className="icon-status">Reset</p>
+//                 </button>
+//               </div>
+//             </div>
+//             <div className="set-timer">
+//               <p className="set-timer-text">Set Timer limit</p>
+//               <div className="increase-decrease-container">
+//                 <button
+//                   type="button"
+//                   className="operator plus-minus-button"
+//                   onClick={
+//                     resetTimerStatus.onIncreaseMin ||
+//                     changeTimerStatus.onIncreaseMin
+//                   }
+//                 >
+//                   -
+//                 </button>
+//                 <p className="setting-time">{minutes}</p>
+//                 <button
+//                   type="button"
+//                   className="operator plus-minus-button"
+//                   onClick={
+//                     resetTimerStatus.onDecreaseMin ||
+//                     changeTimerStatus.onDecreaseMin
+//                   }
+//                 >
+//                   +
+//                 </button>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     )
+//   }
+// }
+
+// export default DigitalTimer
